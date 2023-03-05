@@ -1,0 +1,26 @@
+import React from 'react';
+
+const Pagination = ({ notesPerPage, totalNotes, paginate }) => {
+
+    const pageNum = [];
+
+    for (let i = 1; i <= Math.ceil(totalNotes / notesPerPage); i++) {
+        pageNum.push(i);
+    }
+
+    return (
+        <div className='flex justify-center'>
+            <div className="btn-group">
+                {
+                    pageNum?.map(page =>
+                        <button
+                            onClick={() => paginate(page)}
+                            key={page} className="btn">{page}</button>
+                    )
+                }
+            </div>
+        </div>
+    );
+};
+
+export default Pagination;

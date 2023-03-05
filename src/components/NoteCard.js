@@ -31,7 +31,6 @@ const NoteCard = ({ note, refetch }) => {
     }
 
     const handleTogglePinned = (id) => {
-
         const url = `http://localhost:5000/note/${id}`;
         const noteData = {
             title: note.title,
@@ -64,7 +63,6 @@ const NoteCard = ({ note, refetch }) => {
         return <IsLoading />
     }
 
-
     return (
         <div className='border-2 border-gray-400 hover:bg-gray-100 rounded-md p-2 relative pb-10'>
             <h4>{note.title}</h4>
@@ -80,7 +78,6 @@ const NoteCard = ({ note, refetch }) => {
                     disabled={isLoading}
                     className='absolute right-1 bottom-1 hover:bg-gray-300 rounded-full text-gray-400 hover:text-orange-500 p-1 transition-all ease-in duration-200'><AiFillDelete className='text-xl' /></button>
             </div>
-
         </div>
     );
 };
