@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Pagination = ({ notesPerPage, totalNotes, paginate }) => {
+const Pagination = ({ notesPerPage, totalNotes, paginate, currentPage }) => {
 
     const pageNum = [];
 
@@ -9,13 +9,13 @@ const Pagination = ({ notesPerPage, totalNotes, paginate }) => {
     }
 
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center mb-5'>
             <div className="btn-group">
                 {
                     pageNum?.map(page =>
                         <button
                             onClick={() => paginate(page)}
-                            key={page} className="btn">{page}</button>
+                            key={page} className={`btn btn-sm ${currentPage === page && 'btn-success'} `}>{page}</button>
                     )
                 }
             </div>

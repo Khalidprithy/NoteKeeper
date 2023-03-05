@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import AddNoteModal from '../components/AddNoteModal';
 import AddedNotes from './Notes/AddedNotes';
@@ -49,14 +49,14 @@ const Home = () => {
                     refetch={refetch}
                 />
                 {
-                    unPinnedNotes?.length > 6 &&
+                    unPinnedNotes?.length > 5 &&
                     <Pagination
                         notesPerPage={notesPerPage}
                         totalNotes={unPinnedNotes?.length}
                         paginate={paginate}
+                        currentPage={currentPage}
                     />
                 }
-
             </div>
         </div>
     );
