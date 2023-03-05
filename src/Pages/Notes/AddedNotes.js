@@ -6,7 +6,7 @@ const AddedNotes = ({ unPinnedNotes, refetch }) => {
     return (
 
         <div className='p-4'>
-            <h4 className='text-md md:text-lg text-gray-600 font-medium py-2'>Added Notes</h4>
+            <h4 className='text-md md:text-lg text-gray-600 font-medium py-2'>Notes</h4>
             <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-4'>
                 {
                     unPinnedNotes?.map(note =>
@@ -23,5 +23,4 @@ const AddedNotes = ({ unPinnedNotes, refetch }) => {
 };
 
 export default AddedNotes;
-
 

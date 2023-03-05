@@ -1,21 +1,21 @@
 import React from 'react';
 
-const PinnedPagination = ({ pinnedNotesPerPage, totalPinnedNotes, paginatePinned, currentPagePinned }) => {
+const PinnedPagination = ({ notesPinnedPerPage, totalPinnedNotes, paginatePinned, currentPinnedPage }) => {
 
-    const pageNum = [];
+    const pinnedPageNum = [];
 
-    for (let i = 1; i <= Math.ceil(totalPinnedNotes / pinnedNotesPerPage); i++) {
-        pageNum.push(i);
+    for (let i = 1; i <= Math.ceil(totalPinnedNotes / notesPinnedPerPage); i++) {
+        pinnedPageNum.push(i);
     }
 
     return (
-        <div className='flex justify-center mb-5'>
+        <div className='flex justify-center my-5'>
             <div className="btn-group">
                 {
-                    pageNum?.map(page =>
+                    pinnedPageNum?.map(pages =>
                         <button
-                            onClick={() => paginatePinned(page)}
-                            key={page} className={`btn btn-sm ${currentPagePinned === page && 'btn-success'} `}>{page}</button>
+                            onClick={() => paginatePinned(pages)}
+                            key={pages} className={`btn btn-sm ${currentPinnedPage === pages && 'btn-success'} `}>{pages}</button>
                     )
                 }
             </div>

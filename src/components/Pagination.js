@@ -9,7 +9,7 @@ const Pagination = ({ notesPerPage, totalNotes, paginate, currentPage }) => {
     }
 
     return (
-        <div className='flex justify-center mb-5'>
+        <div className='flex justify-center my-5'>
             <div className="btn-group">
                 {
                     pageNum?.map(page =>
