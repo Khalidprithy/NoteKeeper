@@ -6,9 +6,12 @@ import { useMutation, useQueryClient } from 'react-query';
 import IsLoading from './IsLoading';
 import { toast } from 'react-hot-toast';
 import moment from 'moment/moment';
+import EditNoteModal from './EditNoteModal';
 
-const NoteCard = ({ note, refetch }) => {
+const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, setTempUpdateNote }) => {
 
+
+    console.log(note)
 
     const formattedTime = note.date.timestamp;
     const time = moment(formattedTime).format('h:mm A');
@@ -104,7 +107,6 @@ const NoteCard = ({ note, refetch }) => {
         return <IsLoading />
     }
 
-
     return (
         <div
             onMouseEnter={() => setNoteOpen(note._id)}
@@ -128,16 +130,17 @@ const NoteCard = ({ note, refetch }) => {
                         {/* The button to open edit notes modal */}
                         {
                             !note.isDeleted &&
-                            <div className="absolute right-0 bottom-1 tooltip tooltip-bottom" data-tip={`Edit`}>
-                                <label
-                                    htmlFor="edit-note-modal"
-                                    // onClick={() => handleDeleteNotes(note._id)}
-                                    disabled={isLoading}
-                                    className='absolute right-8 bottom-1 hover:bg-gray-300 rounded-full text-gray-400 hover:text-orange-500 p-1 transition-all ease-in duration-200'><AiFillEdit className='text-xl' /></label>
-                            </div>
+                            <label
+                                htmlFor="edit-note-modal"
+                                onClick={() => {
+                                    setUpdateNote(note)
+                                    setTempUpdateNote(note)
+                                }}
+                                disabled={isLoading}
+                                className='absolute right-9 bottom-[5px] hover:bg-gray-300 rounded-full text-gray-400 hover:text-teal-500 p-1 transition-all ease-in duration-200'><AiFillEdit className='text-xl' /></label>
                         }
 
-                        <div className="absolute right-1 bottom-1 tooltip tooltip-bottom" data-tip={`${note.isDeleted ? 'Restore' : 'Delete'}`}>
+                        <div className="absolute right-1 bottom-1 tooltip tooltip-error tooltip-bottom" data-tip={`${note.isDeleted ? 'Restore' : 'Delete'}`}>
                             <button
                                 onClick={() => handleDeleteNotes(note._id)}
                                 disabled={isLoading}
@@ -154,18 +157,14 @@ const NoteCard = ({ note, refetch }) => {
                         }
                     </div>
                 }
-
             </div>
 
-            {/* Put this part before </body> tag */}
-            <input type="checkbox" id="edit-note-modal" className="modal-toggle" />
-            <div className="modal">
-                <div className="modal-box relative">
-                    <label htmlFor="edit-note-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <h3 className="text-lg font-bold">Congratulations random Internet user!</h3>
-                    <p className="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
-                </div>
-            </div>
+            <EditNoteModal
+                refetch={refetch}
+                updateNote={updateNote}
+                tempUpdateNote={tempUpdateNote}
+                setTempUpdateNote={setTempUpdateNote}
+            />
         </div>
     );
 };

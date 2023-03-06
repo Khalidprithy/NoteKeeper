@@ -1,49 +1,15 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useContext } from 'react';
 import AddNoteModal from '../components/AddNoteModal';
-import AddedNotes from './Notes/AddedNotes';
-import PinnedNotes from './Notes/PinnedNotes';
-import Pagination from '../components/Pagination';
+
 import IsLoading from '../components/IsLoading';
-import PinnedPagination from '../components/PinnedPagination';
+
+import NoteContext from '../context/NoteContext';
+import NoteCards from './Notes/NoteCards';
 
 const Home = () => {
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [currentPinnedPage, setCurrentPinnedPage] = useState(1);
-    const [notesPerPage] = useState(6);
-    const [notesPinnedPerPage] = useState(6);
+    const { refetch, isLoading } = useContext(NoteContext);
 
-    const { data: notesData, refetch, isLoading } = useQuery('notesData', () => fetch(`http://localhost:5000/notes`, {
-        method: 'GET',
-        headers: {
-            'content-type': 'application/json'
-        }
-    }).then(res => res.json()));
-
-    const notes = notesData?.filter((note) => note.isDeleted === false);
-
-
-    const pinnedNotes = notes?.filter((note) => note.isPinned === true);
-    const unPinnedNotes = notes?.filter((note) => note.isPinned === false);
-
-    const lastNote = currentPage * notesPerPage;
-    const firstNote = lastNote - notesPerPage;
-
-    const lastPinnedNote = currentPinnedPage * notesPinnedPerPage;
-    const firstPinnedNote = lastPinnedNote - notesPinnedPerPage;
-
-    const activeNotes = unPinnedNotes?.slice(firstNote, lastNote);
-    const activePinnedNotes = pinnedNotes?.slice(firstPinnedNote, lastPinnedNote);
-
-
-    const paginate = (noteNumber) => {
-        setCurrentPage(noteNumber)
-    };
-
-    const paginatePinned = (notePinned) => {
-        setCurrentPinnedPage(notePinned)
-    };
 
     if (isLoading) {
         return <IsLoading />
@@ -60,40 +26,7 @@ const Home = () => {
                     refetch={refetch}
                 />
             </div>
-            <div>
-                {
-                    pinnedNotes?.length === 0 ||
-                    <PinnedNotes
-                        pinnedNotes={activePinnedNotes}
-                        refetch={refetch}
-                    />
-                }
-                {
-                    pinnedNotes?.length > 5 &&
-                    <PinnedPagination
-                        totalPinnedNotes={pinnedNotes?.length}
-                        notesPinnedPerPage={notesPinnedPerPage}
-                        currentPinnedPage={currentPinnedPage}
-                        paginatePinned={paginatePinned}
-                    />
-                }
-                {
-                    unPinnedNotes?.length === 0 ||
-                    <AddedNotes
-                        unPinnedNotes={activeNotes}
-                        refetch={refetch}
-                    />
-                }
-                {
-                    unPinnedNotes?.length > 5 &&
-                    <Pagination
-                        totalNotes={unPinnedNotes?.length}
-                        notesPerPage={notesPerPage}
-                        currentPage={currentPage}
-                        paginate={paginate}
-                    />
-                }
-            </div>
+            <NoteCards />
         </div>
     );
 };
