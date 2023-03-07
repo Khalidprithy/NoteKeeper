@@ -27,7 +27,6 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 toast.success('Note Updated')
             })
         await refetch();
@@ -38,16 +37,15 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
         <>
             <input type="checkbox" id="edit-note-modal" className="modal-toggle" />
             <div className="modal backdrop-blur-md">
-                <div className="modal-box w-8/12 relative ">
+                <div className="modal-box w-8/12 relative rounded-md">
                     <label htmlFor="edit-note-modal" className="btn btn-sm btn-circle border-0 hover:bg-success absolute right-2 top-2">✕</label>
                     <div className='flex flex-col gap-4 mt-6'>
                         <div className="form-control w-full">
                             <input
-                                className='input w-full border border-gray-400'
+                                className='input w-full border border-gray-400 px-2'
                                 value={tempUpdateNote?.title}
                                 onChange={(e) => {
                                     setChanged(true);
-
                                     setTempUpdateNote({
                                         ...tempUpdateNote,
                                         title: e.target.value,
@@ -70,7 +68,7 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
                                 }}
                                 type="text" />
                         </div>
-                        <h4 className='absolute left-6 bottom-4 text-sm font-medium'>{tempUpdateNote?.date?.message} {time}</h4>
+                        <h4 className='absolute left-6 bottom-4 text-sm font-medium'>{tempUpdateNote?.date?.message}: {time}</h4>
                         {
                             changed && <div className="modal-action mt-1">
                                 <label

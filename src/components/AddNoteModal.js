@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { GoPin } from 'react-icons/go';
 import { useMutation } from 'react-query';
-import IsLoading from './Loading';
+import Loading from './Loading'
 
 const AddNoteModal = ({ refetch }) => {
 
@@ -57,14 +57,14 @@ const AddNoteModal = ({ refetch }) => {
     }
 
     if (isLoading) {
-        return <IsLoading />
+        return <Loading />
     }
 
     return (
         <>
             <input type="checkbox" id="add-task-modal" className="modal-toggle" />
             <div className="modal backdrop-blur-sm inset-0 z-[99]">
-                <div className="modal-box relative ">
+                <div className="modal-box relative rounded-md">
                     <label htmlFor="add-task-modal" className="btn btn-sm btn-circle border-0 hover:bg-success absolute right-2 top-2">✕</label>
                     <button
                         onClick={() => setIsPinned(!isPinned)}
@@ -113,8 +113,7 @@ const AddNoteModal = ({ refetch }) => {
                             </div>
 
                             <input
-
-                                className="btn btn-outline w-full" type="submit" value='Add' />
+                                className="btn btn-outline w-full" type="submit" value='Add Note' />
                         </form>
                     </div>
                 </div>

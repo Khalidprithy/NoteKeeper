@@ -23,7 +23,7 @@ const Deleted = () => {
                         :
                         <>
                             <div className='flex items-center justify-between mb-4'>
-                                <h4 className='text-md md:text-lg text-gray-600 font-medium py-2'>Deleted Notes</h4>
+                                <h4 className='text-md md:text-lg text-gray-600 dark:text-gray-300 font-medium py-2'>Deleted Notes</h4>
                                 <label
                                     htmlFor="empty-trash-modal"
                                     className='btn btn-sm btn-error'>Empty Trash</label>

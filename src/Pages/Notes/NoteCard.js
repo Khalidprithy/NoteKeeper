@@ -3,11 +3,11 @@ import { GoPin } from 'react-icons/go';
 import { FaTrashRestore } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import IsLoading from '../../components/Loading';
 import { toast } from 'react-hot-toast';
 import moment from 'moment/moment';
 import EditNoteModal from '../../components/EditNoteModal';
 import ConfirmDeleteModal from '../../components/ConfirmDeleteModal';
+import Loading from '../../components/Loading';
 
 const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpdateNote, setTempUpdateNote, deleteNote, setDeleteNote }) => {
 
@@ -75,17 +75,17 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
 
 
     if (isLoading) {
-        return <IsLoading />
+        return <Loading />
     }
 
     return (
         <div
             onMouseEnter={() => setNoteOpen(note._id)}
             onMouseLeave={() => setNoteOpen('')}
-            className={`h-fit border border-gray-300 ${note.isDeleted && 'bg-gray-300 hover:bg-gray-300 hover:shadow-md'} hover:bg-gray-100 hover:shadow-lg rounded-md p-2 relative pb-10 transition-all ease-in duration-150`}>
-            <h4 className='font-medium'>{note.title}</h4>
+            className={`h-fit border border-gray-300 dark:bg-gray-400 ${note.isDeleted && 'bg-gray-300 hover:bg-gray-300 hover:shadow-md'} hover:bg-gray-100 hover:shadow-lg rounded-md p-2 relative pb-10 transition-all ease-in duration-150`}>
+            <h4 className='font-medium pr-3'>{note.title}</h4>
             <div>
-                <p>{note.noteBody}</p>
+                <p className='text-gray-700'>{note.noteBody}</p>
                 <p className='text-sm font-semibold'>{note.tagline}</p>
                 {
                     !note.isDeleted &&

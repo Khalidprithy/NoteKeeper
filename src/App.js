@@ -6,11 +6,12 @@ import Deleted from "./Pages/Deleted";
 import Home from "./Pages/Home";
 import { VscSymbolKeyword } from 'react-icons/vsc';
 import { Toaster } from "react-hot-toast";
+import Login from "./Pages/Login";
 
 function App() {
 
   return (
-    <div className="drawer drawer-mobile">
+    <div className="drawer drawer-mobile bg-white dark:bg-gray-700">
       <input id="sidebar-menu" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content relative">
         <Header />
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/completed" element={<Completed />}></Route>
           <Route path="/deleted" element={<Deleted />}></Route>
+          <Route path="/login" element={<Login />}></Route>
         </Routes>
 
         <label htmlFor="sidebar-menu" className="fixed top-5 left-5 z-40 bg-gray-100 hover:bg-green-500 rounded-full p-1 drawer-button lg:hidden transition-all ease-in duration-150"><VscSymbolKeyword className="text-3xl" /></label>
