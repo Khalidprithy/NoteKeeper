@@ -32,7 +32,7 @@ const ConfirmDeleteModal = ({ refetch, deleteNote, setDeleteNote }) => {
             <div className="modal backdrop-blur-md">
                 <div className="modal-box relative rounded-md">
                     <label htmlFor="confirm-delete-modal" className="btn btn-sm btn-circle border-0 hover:bg-success absolute right-2 top-2">✕</label>
-                    <h3 className="text-lg font-bold">Are you sure you want to delete <span className='text-red-400'>{deleteNote?.title}</span> </h3>
+                    <h3 className="text-lg font-bold pr-4">Are you sure you want to delete: <span className='text-red-400'>"{deleteNote?.title}"</span> </h3>
                     <div className="modal-action mt-4">
                         <label
                             htmlFor="confirm-delete-modal"

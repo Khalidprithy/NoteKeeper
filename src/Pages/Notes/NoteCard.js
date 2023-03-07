@@ -125,7 +125,7 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
                         </div>
                         {
                             note.isDeleted &&
-                            <div className="absolute right-[2px] top-0 tooltip tooltip-error tooltip-right" data-tip='Abolish'>
+                            <div className="absolute right-[2px] top-0 tooltip tooltip-error tooltip-right" data-tip='Wipe Out'>
                                 <label
                                     onClick={() => {
                                         setDeleteNote(note)
