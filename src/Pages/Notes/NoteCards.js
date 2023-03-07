@@ -16,6 +16,8 @@ const NoteCards = () => {
     if (isLoading) {
         return <IsLoading />
     }
+
+
     return (
         <>
             {

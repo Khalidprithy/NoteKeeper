@@ -11,11 +11,14 @@ import Loading from '../../components/Loading';
 
 const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpdateNote, setTempUpdateNote, deleteNote, setDeleteNote }) => {
 
+    const [loading, setLoading] = useState(false);
+
     const formattedTime = note.date.timestamp;
     const time = moment(formattedTime).format('h:mm A');
     const [noteOpen, setNoteOpen] = useState('');
 
     const handleTogglePinned = (id) => {
+        setLoading(true);
         const url = `https://todo-server-ze08.onrender.com/note/${id}`;
         const noteData = {
             title: note.title,
@@ -41,6 +44,7 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
             .catch(error => {
                 toast.error(error)
             });
+        setLoading(false);
     }
 
 
@@ -64,9 +68,8 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
         })
             .then(res => res.json())
             .then(data => {
-                refetch();
                 toast.success(`${note.isDeleted ? 'Restored' : 'Note Moved to Deleted'} `)
-
+                refetch();
             })
             .catch(error => {
                 toast.error(error)
@@ -74,7 +77,7 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
     }
 
 
-    if (isLoading) {
+    if (isLoading || loading) {
         return <Loading />
     }
 

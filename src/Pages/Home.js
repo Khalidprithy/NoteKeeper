@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import AddNoteModal from '../components/AddNoteModal';
-import IsLoading from '../components/Loading';
+import Loading from '../components/Loading';
 import NoteContext from '../context/NoteContext';
 import NoteCards from './Notes/NoteCards';
 
@@ -9,8 +9,8 @@ const Home = () => {
     const { refetch, isLoading } = useContext(NoteContext);
 
     if (isLoading) {
-        return <IsLoading />
-    }
+        return <Loading />
+    };
 
     return (
         <>
