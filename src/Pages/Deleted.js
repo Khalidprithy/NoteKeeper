@@ -19,7 +19,7 @@ const Deleted = () => {
             <div className='p-4'>
                 {
                     deleteNotes?.length === 0 ?
-                        <h4 className='text-md text-center md:text-lg text-gray-600 font-medium py-2'>Empty</h4>
+                        <h4 className='text-md text-center md:text-lg text-gray-600 dark:text-gray-300 font-medium py-2'>Empty</h4>
                         :
                         <>
                             <div className='flex items-center justify-between mb-4'>
