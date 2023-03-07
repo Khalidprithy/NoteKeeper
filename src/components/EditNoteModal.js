@@ -8,16 +8,15 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
     const time = moment(formattedTime).format('h:mm A');
 
     const [changed, setChanged] = useState(false);
-    const [postData, setPostData] = useState({
+    const [postData] = useState({
         message: 'Edited',
-        timestamp: new Date().toISOString() // include current date and time
+        timestamp: new Date().toISOString()
     });
 
-    console.log(tempUpdateNote)
-
+    // Edit note function
     const handleEditNote = async () => {
         const { _id, ...updatedNote } = tempUpdateNote;
-        const url = `http://localhost:5000/note/${updateNote._id}`;
+        const url = `https://todo-server-ze08.onrender.com/note/${updateNote._id}`;
         console.log(tempUpdateNote)
         await fetch(url, {
             method: 'PUT',
@@ -35,15 +34,12 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
         setChanged(false)
     }
 
-
     return (
-        <div>
-            {/* Put this part before </body> tag */}
+        <>
             <input type="checkbox" id="edit-note-modal" className="modal-toggle" />
             <div className="modal backdrop-blur-md">
                 <div className="modal-box w-8/12 relative ">
                     <label htmlFor="edit-note-modal" className="btn btn-sm btn-circle border-0 hover:bg-success absolute right-2 top-2">✕</label>
-
                     <div className='flex flex-col gap-4 mt-6'>
                         <div className="form-control w-full">
                             <input
@@ -95,7 +91,7 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -4,10 +4,8 @@ import Sidebar from "./components/Sidebar";
 import Completed from "./Pages/Completed";
 import Deleted from "./Pages/Deleted";
 import Home from "./Pages/Home";
-import { AiOutlineMenuUnfold } from 'react-icons/ai';
 import { VscSymbolKeyword } from 'react-icons/vsc';
 import { Toaster } from "react-hot-toast";
-
 
 function App() {
 
@@ -21,6 +19,7 @@ function App() {
           <Route path="/completed" element={<Completed />}></Route>
           <Route path="/deleted" element={<Deleted />}></Route>
         </Routes>
+
         <label htmlFor="sidebar-menu" className="fixed top-5 left-5 z-40 bg-gray-100 hover:bg-green-500 rounded-full p-1 drawer-button lg:hidden transition-all ease-in duration-150"><VscSymbolKeyword className="text-3xl" /></label>
         <Toaster
           position="bottom-right"

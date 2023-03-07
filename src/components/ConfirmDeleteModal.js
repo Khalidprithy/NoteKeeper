@@ -6,7 +6,7 @@ const ConfirmDeleteModal = ({ refetch, deleteNote, setDeleteNote }) => {
 
     const queryClient = useQueryClient();
     const { mutate } = useMutation(
-        (id) => fetch(`http://localhost:5000/note/${deleteNote._id}`, {
+        (id) => fetch(`https://todo-server-ze08.onrender.com/note/${deleteNote._id}`, {
             method: 'DELETE'
         }),
         {
@@ -15,7 +15,6 @@ const ConfirmDeleteModal = ({ refetch, deleteNote, setDeleteNote }) => {
                 queryClient.invalidateQueries('notes');
                 refetch();
                 toast.success('Note Deleted Permanently')
-                console.log(data)
             },
             onError: (error) => {
                 console.error(error);
@@ -28,8 +27,7 @@ const ConfirmDeleteModal = ({ refetch, deleteNote, setDeleteNote }) => {
     }
 
     return (
-        <div>
-            {/* Put this part before </body> tag */}
+        <>
             <input type="checkbox" id="confirm-delete-modal" className="modal-toggle" />
             <div className="modal backdrop-blur-md">
                 <div className="modal-box relative">
@@ -51,7 +49,7 @@ const ConfirmDeleteModal = ({ refetch, deleteNote, setDeleteNote }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

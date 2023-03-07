@@ -3,16 +3,16 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { GoPin } from 'react-icons/go';
 import { useMutation } from 'react-query';
-import IsLoading from './IsLoading';
+import IsLoading from './Loading';
 
 const AddNoteModal = ({ refetch }) => {
 
     const [isPinned, setIsPinned] = useState(false);
-    const [isCompleted, setIsCompleted] = useState(false);
-    const [isDeleted, setIsDeleted] = useState(false);
-    const [postData, setPostData] = useState({
+    const [isCompleted] = useState(false);
+    const [isDeleted] = useState(false);
+    const [postData] = useState({
         message: 'Edited',
-        timestamp: new Date().toISOString() // include current date and time
+        timestamp: new Date().toISOString()
     });
 
     const { register, reset, formState: { errors }, handleSubmit } = useForm({
@@ -20,7 +20,7 @@ const AddNoteModal = ({ refetch }) => {
     });
 
     const { mutate, isLoading } = useMutation(
-        (noteData) => fetch('http://localhost:5000/notes', {
+        (noteData) => fetch('https://todo-server-ze08.onrender.com/notes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,6 +39,8 @@ const AddNoteModal = ({ refetch }) => {
         }
     );
 
+
+    // Add new note function
     const onSubmit = async (data, e) => {
         e.preventDefault();
         const noteData = {
@@ -50,8 +52,6 @@ const AddNoteModal = ({ refetch }) => {
             isCompleted: isCompleted,
             isDeleted: isDeleted,
         };
-        console.log(noteData)
-
         mutate(noteData);
         reset();
     }
@@ -61,7 +61,7 @@ const AddNoteModal = ({ refetch }) => {
     }
 
     return (
-        <div className=''>
+        <>
             <input type="checkbox" id="add-task-modal" className="modal-toggle" />
             <div className="modal backdrop-blur-sm inset-0 z-[99]">
                 <div className="modal-box relative ">
@@ -119,7 +119,7 @@ const AddNoteModal = ({ refetch }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

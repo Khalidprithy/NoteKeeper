@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { createContext } from "react";
-import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 
 const NoteContext = createContext();
@@ -14,17 +13,33 @@ export const NoteProvider = ({ children }) => {
     const [notesPerPage] = useState(6);
     const [notesPinnedPerPage] = useState(6);
 
-    const { data: notesData, refetch, isLoading } = useQuery('notesData', () => fetch(`http://localhost:5000/notes`, {
+    // Get all notes data
+    const { data: notesData, refetch, isLoading } = useQuery('notesData', () => fetch(`https://todo-server-ze08.onrender.com/notes`, {
         method: 'GET',
         headers: {
             'content-type': 'application/json'
         }
     }).then(res => res.json()));
 
+    // Delete all deleted notes
+    async function handleEmptyTrash() {
+        try {
+            const response = await fetch('https://todo-server-ze08.onrender.com/empty_trash', { method: 'DELETE' });
+            const data = await response.json();
+            console.log(data)
+            refetch();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    // Notes Filter
     const notes = notesData?.filter((note) => note.isDeleted === false);
     const pinnedNotes = notes?.filter((note) => note.isPinned === true);
     const unPinnedNotes = notes?.filter((note) => note.isPinned === false);
+    const deleteNotes = notesData?.filter((note) => note.isDeleted === true);
 
+    // Pagination
     const lastNote = currentPage * notesPerPage;
     const firstNote = lastNote - notesPerPage;
 
@@ -58,14 +73,18 @@ export const NoteProvider = ({ children }) => {
         notesPerPage: notesPerPage,
         notesPinnedPerPage: notesPinnedPerPage,
 
-        // Fetch notes
+        // Fetched and filtered notes
         notes: notes,
         refetch: refetch,
         isLoading: isLoading,
         pinnedNotes: pinnedNotes,
         activeNotes: activeNotes,
+        deleteNotes: deleteNotes,
         unPinnedNotes: unPinnedNotes,
         activePinnedNotes: activePinnedNotes,
+
+        // Delete all deleted notes
+        handleEmptyTrash: handleEmptyTrash
     }
 
     return (
@@ -74,7 +93,6 @@ export const NoteProvider = ({ children }) => {
         </NoteContext.Provider >
     )
 }
-
 
 // Developed by Khalid
 // Git: github.com/Khalidprithy

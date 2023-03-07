@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const Sidebar = () => {
 
     return (
-
         <>
             <li className='flex items-center '>
                 <h4 className='text-white text-xl font-bold hidden lg:block'>QuickNote</h4>

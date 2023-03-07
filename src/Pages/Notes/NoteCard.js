@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 import { GoPin } from 'react-icons/go';
+import { FaTrashRestore } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import { useMutation, useQueryClient } from 'react-query';
-import IsLoading from './IsLoading';
+import IsLoading from '../../components/Loading';
 import { toast } from 'react-hot-toast';
 import moment from 'moment/moment';
-import EditNoteModal from './EditNoteModal';
-import ConfirmDeleteModal from './ConfirmDeleteModal';
+import EditNoteModal from '../../components/EditNoteModal';
+import ConfirmDeleteModal from '../../components/ConfirmDeleteModal';
 
-const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, setTempUpdateNote, deleteNote, setDeleteNote }) => {
-
-    // console.log(note)
+const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpdateNote, setTempUpdateNote, deleteNote, setDeleteNote }) => {
 
     const formattedTime = note.date.timestamp;
     const time = moment(formattedTime).format('h:mm A');
     const [noteOpen, setNoteOpen] = useState('');
 
     const handleTogglePinned = (id) => {
-        const url = `http://localhost:5000/note/${id}`;
+        const url = `https://todo-server-ze08.onrender.com/note/${id}`;
         const noteData = {
             title: note.title,
             noteBody: note.noteBody,
@@ -47,7 +45,7 @@ const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, se
 
 
     const handleDeleteNotes = (id) => {
-        const url = `http://localhost:5000/note/${id}`;
+        const url = `https://todo-server-ze08.onrender.com/note/${id}`;
         const noteData = {
             title: note.title,
             noteBody: note.noteBody,
@@ -75,12 +73,17 @@ const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, se
             });
     }
 
+
+    if (isLoading) {
+        return <IsLoading />
+    }
+
     return (
         <div
             onMouseEnter={() => setNoteOpen(note._id)}
             onMouseLeave={() => setNoteOpen('')}
-            className={`h-fit border-2 border-gray-400 ${note.isDeleted && 'bg-gray-300 hover:bg-gray-300'} hover:bg-gray-100 rounded-md p-2 relative pb-10`}>
-            <h4>{note.title}</h4>
+            className={`h-fit border border-gray-300 ${note.isDeleted && 'bg-gray-300 hover:bg-gray-300 hover:shadow-md'} hover:bg-gray-100 hover:shadow-lg rounded-md p-2 relative pb-10 transition-all ease-in duration-150`}>
+            <h4 className='font-medium'>{note.title}</h4>
             <div>
                 <p>{note.noteBody}</p>
                 <p className='text-sm font-semibold'>{note.tagline}</p>
@@ -110,22 +113,27 @@ const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, se
                         <div className={`absolute right-1 bottom-1 tooltip ${note.isDeleted ? 'tooltip-success' : 'tooltip-error'} tooltip-bottom`} data-tip={`${note.isDeleted ? 'Restore' : 'Delete'}`}>
                             <button
                                 onClick={() => handleDeleteNotes(note._id)}
-                                className=' hover:bg-gray-300 rounded-full text-gray-400 hover:text-orange-500 p-1 transition-all ease-in duration-200'><AiFillDelete className='text-xl' /></button>
+                                className=' hover:bg-gray-300 rounded-full text-gray-400 hover:text-orange-500 p-1 transition-all ease-in duration-200'>
+                                {
+                                    note.isDeleted ?
+                                        <FaTrashRestore className='text-base' />
+                                        :
+                                        <AiFillDelete className='text-xl' />
+                                }
+
+                            </button>
                         </div>
                         {
                             note.isDeleted &&
-                            <div className="absolute right-1 top-1 tooltip tooltip-error tooltip-top" data-tip='Abolish'>
+                            <div className="absolute right-[2px] top-0 tooltip tooltip-error tooltip-right" data-tip='Abolish'>
                                 <label
                                     onClick={() => {
                                         setDeleteNote(note)
                                     }}
                                     htmlFor="confirm-delete-modal"
-                                    className='absolute right-0 top-0 hover:bg-gray-300 rounded-full text-red-500 hover:text-red-600 p-1 transition-all ease-in duration-200'><MdDeleteForever className='text-xl' /></label>
+                                    className='absolute top-0 right-0 hover:bg-gray-300 rounded-full text-red-500 hover:text-red-600 p-1 transition-all ease-in duration-200'><MdDeleteForever className='text-xl' /></label>
                             </div>
                         }
-
-                        {/* The button to open modal
-                        <label className="btn">open modal</label> */}
                     </div>
                 }
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const IsLoading = () => {
+const Loading = () => {
     return (
         <div className="text-center">
             <div role="status">
@@ -14,4 +14,4 @@ const IsLoading = () => {
     );
 };
 
-export default IsLoading;
+export default Loading;
