@@ -37,7 +37,7 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
         <>
             <input type="checkbox" id="edit-note-modal" className="modal-toggle" />
             <div className="modal backdrop-blur-md">
-                <div className="modal-box w-8/12 relative rounded-md">
+                <div className="modal-box w-full md:w-8/12 relative rounded-md">
                     <label htmlFor="edit-note-modal" className="btn btn-sm btn-circle border-0 hover:bg-success absolute right-2 top-2">✕</label>
                     <div className='flex flex-col gap-4 mt-6'>
                         <div className="form-control w-full">
