@@ -13,7 +13,7 @@
     Project Description
     <br />
     <br />
-    <a href="https://quickn.netlify.app/">Live Link</a>
+    <a href="https://quickn.netlify.app/">Live Application Link</a>
     ·
     <a href="https://github.com/Khalidprithy/Todo_Curd_Server.git">Server GitHub Link</a>
   </p>
