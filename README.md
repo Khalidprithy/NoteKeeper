@@ -3,17 +3,18 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="">
+<h2 align="center">QuickNote</h2>
+  <a href="https://quickn.netlify.app/">
     <img src="https://i.ibb.co/Zhfgqbf/Quick-Note.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">QuickNote</h3>
+<h3 align="center">Organize Your Life with Ease</h3>
 
   <p align="center">
     Project Description
     <br />
     <br />
-    <a href="https://quickn.netlify.app/">Live Application Link</a>
+    <a href="https://quickn.netlify.app/">QuickNote Live Link</a>
     ·
     <a href="https://github.com/Khalidprithy/Todo_Curd_Server.git">Server GitHub Link</a>
   </p>
