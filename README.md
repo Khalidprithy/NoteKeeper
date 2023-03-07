@@ -3,7 +3,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
+
 <h2 align="center">QuickNote</h2>
+
   <a href="https://quickn.netlify.app/">
     <img src="https://i.ibb.co/Zhfgqbf/Quick-Note.png" alt="Logo" width="80" height="80">
   </a>

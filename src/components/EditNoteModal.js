@@ -44,6 +44,7 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
                             <input
                                 className='input w-full border border-gray-400 px-2'
                                 value={tempUpdateNote?.title}
+                                placeholder='Add note title'
                                 onChange={(e) => {
                                     setChanged(true);
                                     setTempUpdateNote({
@@ -56,8 +57,9 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
                         </div>
                         <div className="form-control w-full">
                             <textarea
-                                className='input w-full border border-gray-400 h-auto min-h-16 p-2 mb-5'
+                                className='input w-full border border-gray-400 h-auto min-h-16 p-2'
                                 value={tempUpdateNote?.noteBody}
+                                placeholder='Add note body'
                                 onChange={(e) => {
                                     setChanged(true)
                                     setTempUpdateNote({
@@ -68,7 +70,22 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
                                 }}
                                 type="text" />
                         </div>
-                        <h4 className='absolute left-6 bottom-4 text-sm font-medium'>{tempUpdateNote?.date?.message}: {time}</h4>
+                        <div className="form-control w-full">
+                            <input
+                                className='input w-full border border-gray-400 px-2 mb-5'
+                                value={tempUpdateNote?.tagline}
+                                placeholder='Add tagline'
+                                onChange={(e) => {
+                                    setChanged(true);
+                                    setTempUpdateNote({
+                                        ...tempUpdateNote,
+                                        tagline: e.target.value,
+                                        date: postData,
+                                    });
+                                }}
+                                type="text" />
+                        </div>
+                        <h4 className='absolute left-6 bottom-4 text-sm font-medium'>{tempUpdateNote?.date?.message} {time}</h4>
                         {
                             changed && <div className="modal-action mt-1">
                                 <label
