@@ -7,42 +7,17 @@ import IsLoading from './IsLoading';
 import { toast } from 'react-hot-toast';
 import moment from 'moment/moment';
 import EditNoteModal from './EditNoteModal';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, setTempUpdateNote }) => {
+const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, setTempUpdateNote, deleteNote, setDeleteNote }) => {
 
-
-    console.log(note)
+    // console.log(note)
 
     const formattedTime = note.date.timestamp;
     const time = moment(formattedTime).format('h:mm A');
     const [noteOpen, setNoteOpen] = useState('');
-    const [loading, setLoading] = useState(false);
-
-    const queryClient = useQueryClient();
-    const { mutate, isLoading } = useMutation(
-        (id) => fetch(`http://localhost:5000/note/${id}`, {
-            method: 'DELETE'
-        }),
-        {
-            onSuccess: (data) => {
-                // Invalidate and refetch the notes query to update the UI
-                queryClient.invalidateQueries('notes');
-                refetch();
-                toast.success('Note moved to Deleted')
-                console.log(data)
-            },
-            onError: (error) => {
-                console.error(error);
-            }
-        }
-    );
-
-    const handleDeleteNote = (id) => {
-        mutate(id);
-    }
 
     const handleTogglePinned = (id) => {
-        setLoading(true);
         const url = `http://localhost:5000/note/${id}`;
         const noteData = {
             title: note.title,
@@ -68,12 +43,10 @@ const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, se
             .catch(error => {
                 toast.error(error)
             });
-        setLoading(false)
     }
 
 
     const handleDeleteNotes = (id) => {
-        setLoading(true);
         const url = `http://localhost:5000/note/${id}`;
         const noteData = {
             title: note.title,
@@ -100,18 +73,13 @@ const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, se
             .catch(error => {
                 toast.error(error)
             });
-        setLoading(false);
-    }
-
-    if (isLoading && loading) {
-        return <IsLoading />
     }
 
     return (
         <div
             onMouseEnter={() => setNoteOpen(note._id)}
             onMouseLeave={() => setNoteOpen('')}
-            className={`border-2 border-gray-400 ${note.isDeleted && 'bg-gray-300 hover:bg-gray-300'} hover:bg-gray-100 rounded-md p-2 relative pb-10`}>
+            className={`h-fit border-2 border-gray-400 ${note.isDeleted && 'bg-gray-300 hover:bg-gray-300'} hover:bg-gray-100 rounded-md p-2 relative pb-10`}>
             <h4>{note.title}</h4>
             <div>
                 <p>{note.noteBody}</p>
@@ -136,28 +104,35 @@ const NoteCard = ({ note, refetch, updateNote, setUpdateNote, tempUpdateNote, se
                                     setUpdateNote(note)
                                     setTempUpdateNote(note)
                                 }}
-                                disabled={isLoading}
                                 className='absolute right-9 bottom-[5px] hover:bg-gray-300 rounded-full text-gray-400 hover:text-teal-500 p-1 transition-all ease-in duration-200'><AiFillEdit className='text-xl' /></label>
                         }
 
-                        <div className="absolute right-1 bottom-1 tooltip tooltip-error tooltip-bottom" data-tip={`${note.isDeleted ? 'Restore' : 'Delete'}`}>
+                        <div className={`absolute right-1 bottom-1 tooltip ${note.isDeleted ? 'tooltip-success' : 'tooltip-error'} tooltip-bottom`} data-tip={`${note.isDeleted ? 'Restore' : 'Delete'}`}>
                             <button
                                 onClick={() => handleDeleteNotes(note._id)}
-                                disabled={isLoading}
                                 className=' hover:bg-gray-300 rounded-full text-gray-400 hover:text-orange-500 p-1 transition-all ease-in duration-200'><AiFillDelete className='text-xl' /></button>
                         </div>
                         {
                             note.isDeleted &&
-                            <div className="absolute right-6 bottom-1 tooltip tooltip-error tooltip-bottom" data-tip='Abolish'>
-                                <button
-                                    onClick={() => handleDeleteNote(note._id)}
-                                    disabled={isLoading}
-                                    className=' hover:bg-gray-300 rounded-full text-red-500 hover:text-red-600 p-1 transition-all ease-in duration-200'><MdDeleteForever className='text-xl' /></button>
+                            <div className="absolute right-1 top-1 tooltip tooltip-error tooltip-top" data-tip='Abolish'>
+                                <label
+                                    onClick={() => {
+                                        setDeleteNote(note)
+                                    }}
+                                    htmlFor="confirm-delete-modal"
+                                    className='absolute right-0 top-0 hover:bg-gray-300 rounded-full text-red-500 hover:text-red-600 p-1 transition-all ease-in duration-200'><MdDeleteForever className='text-xl' /></label>
                             </div>
                         }
+
+                        {/* The button to open modal
+                        <label className="btn">open modal</label> */}
                     </div>
                 }
             </div>
+            <ConfirmDeleteModal
+                refetch={refetch}
+                deleteNote={deleteNote}
+            />
 
             <EditNoteModal
                 refetch={refetch}

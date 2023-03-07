@@ -11,7 +11,7 @@ const AddNoteModal = ({ refetch }) => {
     const [isCompleted, setIsCompleted] = useState(false);
     const [isDeleted, setIsDeleted] = useState(false);
     const [postData, setPostData] = useState({
-        message: '',
+        message: 'Edited',
         timestamp: new Date().toISOString() // include current date and time
     });
 
@@ -65,7 +65,7 @@ const AddNoteModal = ({ refetch }) => {
             <input type="checkbox" id="add-task-modal" className="modal-toggle" />
             <div className="modal backdrop-blur-sm inset-0 z-[99]">
                 <div className="modal-box relative ">
-                    <label htmlFor="add-task-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label htmlFor="add-task-modal" className="btn btn-sm btn-circle border-0 hover:bg-success absolute right-2 top-2">✕</label>
                     <button
                         onClick={() => setIsPinned(!isPinned)}
                         className={`absolute left-2 top-2 rounded-full ${isPinned ? 'text-gray-800' : 'text-gray-400'} hover:bg-gray-200 p-1`}><GoPin className='text-2xl -rotate-45' /></button>

@@ -10,6 +10,7 @@ const NoteCards = () => {
     const [updateNote, setUpdateNote] = useState();
     const [tempUpdateNote, setTempUpdateNote] = useState();
 
+
     const { currentPage, currentPinnedPage, notesPerPage, notesPinnedPerPage, pinnedNotes, unPinnedNotes, activeNotes, activePinnedNotes, paginate, paginatePinned, refetch, isLoading } = useContext(NoteContext);
 
 
