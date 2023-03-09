@@ -5,7 +5,7 @@ const Sidebar = () => {
 
     return (
         <div className='relative h-full'>
-            <li className='flex items-center'>
+            <li className='flex items-center pb-4'>
                 <h4 className='text-white text-xl font-bold hidden lg:block'>QuickNote</h4>
             </li>
             <li>

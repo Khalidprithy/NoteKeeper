@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GoPin } from 'react-icons/go';
 import { FaTrashRestore } from 'react-icons/fa';
+import { BsCheck2Square } from 'react-icons/bs';
 import { MdDeleteForever } from 'react-icons/md';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { toast } from 'react-hot-toast';
@@ -18,6 +19,8 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
     const [noteOpen, setNoteOpen] = useState('');
 
     const handleTogglePinned = (id) => {
+
+
         setLoading(true);
         const url = `https://todo-server-ze08.onrender.com/note/${id}`;
         const noteData = {
@@ -76,6 +79,34 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
             });
     }
 
+    const handleToggleComplete = (id) => {
+        const url = `https://todo-server-ze08.onrender.com/note/${id}`;
+        const noteData = {
+            title: note.title,
+            noteBody: note.noteBody,
+            tagline: note.tagline,
+            date: note.date,
+            isPinned: note.isPinned,
+            isCompleted: !note.isCompleted,
+            isDeleted: note.isDeleted,
+        };
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(noteData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                toast.success(`${note.isCompleted ? 'Moved to First' : 'Note Moved to the end'} `)
+                refetch();
+            })
+            .catch(error => {
+                toast.error(error)
+            });
+    }
+
 
     if (isLoading || loading) {
         return <Loading />
@@ -85,7 +116,7 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
         <div
             onMouseEnter={() => setNoteOpen(note._id)}
             onMouseLeave={() => setNoteOpen('')}
-            className={`h-fit border border-gray-300 dark:bg-gray-400 ${note.isDeleted && 'bg-gray-300 hover:bg-gray-300 hover:shadow-md'} hover:bg-gray-100 hover:shadow-lg rounded-md p-2 relative pb-10 transition-all ease-in duration-150`}>
+            className={`h-fit border border-gray-300 dark:bg-gray-400 ${note.isDeleted && 'bg-gray-300 hover:bg-gray-300 hover:shadow-md'} ${note.isCompleted && 'ring ring-green-500 hover:shadow-md'} hover:bg-gray-100 hover:shadow-lg rounded-md p-2 relative pb-10 transition-all ease-in duration-150`}>
             <h4 className='font-medium pr-3'>{note.title}</h4>
             <div>
                 <p className='text-gray-700'>{note.noteBody}</p>
@@ -101,6 +132,9 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
                     noteOpen === note._id &&
                     <div>
                         <h4 className='absolute left-2 bottom-2 text-sm font-medium'>{time}</h4>
+                        <button
+                            onClick={() => handleToggleComplete(note._id)}
+                            className='absolute -left-3 -top-4 bg-green-400 hover:bg-green-600 rounded-full text-gray-600 hover:text-gray-50 p-1 transition-all ease-in duration-200'><BsCheck2Square className='text-xl' /></button>
                         {/* The button to open edit notes modal */}
                         {
                             !note.isDeleted &&
@@ -110,7 +144,7 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
                                     setUpdateNote(note)
                                     setTempUpdateNote(note)
                                 }}
-                                className='absolute right-9 bottom-[5px] hover:bg-gray-300 rounded-full text-gray-400 hover:text-teal-500 p-1 transition-all ease-in duration-200'><AiFillEdit className='text-xl' /></label>
+                                className='absolute right-9 bottom-[6px] hover:bg-gray-300 rounded-full text-gray-400 hover:text-teal-500 p-1 transition-all ease-in duration-200'><AiFillEdit className='text-xl' /></label>
                         }
 
                         <div className={`absolute right-1 bottom-1 tooltip ${note.isDeleted ? 'tooltip-success' : 'tooltip-error'} tooltip-bottom`} data-tip={`${note.isDeleted ? 'Restore' : 'Delete'}`}>

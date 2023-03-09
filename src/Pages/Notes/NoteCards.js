@@ -5,6 +5,7 @@ import Pagination from '../../components/Pagination';
 import PinnedPagination from '../../components/PinnedPagination';
 import NoteContext from '../../context/NoteContext';
 
+
 const NoteCards = () => {
 
     const [updateNote, setUpdateNote] = useState();
@@ -23,7 +24,7 @@ const NoteCards = () => {
             {
                 pinnedNotes?.length === 0 ||
                 <div className='p-4'>
-                    <h4 className='text-md md:text-lg text-gray-600 dark:text-gray-300 font-medium py-2'>Pinned Notes</h4>
+                    <h4 className='text-md md:text-lg text-gray-600 dark:text-gray-300 font-medium py-4'>Pinned Notes</h4>
                     <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-4'>
                         {
                             activePinnedNotes?.map(note =>
@@ -44,7 +45,7 @@ const NoteCards = () => {
                 </div>
             }
             {
-                pinnedNotes?.length > 5 &&
+                pinnedNotes?.length > 6 &&
                 <PinnedPagination
                     totalPinnedNotes={pinnedNotes?.length}
                     notesPinnedPerPage={notesPinnedPerPage}
@@ -55,7 +56,7 @@ const NoteCards = () => {
             {
                 unPinnedNotes?.length === 0 ||
                 <div className='p-4'>
-                    <h4 className='text-md md:text-lg text-gray-600 dark:text-gray-300 font-medium py-2'>Notes</h4>
+                    <h4 className='text-md md:text-lg text-gray-600 dark:text-gray-300 font-medium py-4'>Notes</h4>
                     <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-4'>
                         {
                             activeNotes?.map(note =>
@@ -75,7 +76,7 @@ const NoteCards = () => {
                 </div>
             }
             {
-                unPinnedNotes?.length > 5 &&
+                unPinnedNotes?.length > 6 &&
                 <Pagination
                     totalNotes={unPinnedNotes?.length}
                     notesPerPage={notesPerPage}

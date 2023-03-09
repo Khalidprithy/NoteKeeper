@@ -8,13 +8,16 @@ const Pagination = ({ notesPerPage, totalNotes, paginate, currentPage }) => {
         pageNum.push(i);
     }
 
+
     return (
         <div className='flex justify-center my-5'>
             <div className="btn-group">
                 {
                     pageNum?.map(page =>
                         <button
-                            onClick={() => paginate(page)}
+                            onClick={() => {
+                                paginate(page)
+                            }}
                             key={page} className={`btn btn-sm ${currentPage === page && 'btn-success'} `}>{page}</button>
                     )
                 }
