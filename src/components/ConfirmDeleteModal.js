@@ -6,7 +6,7 @@ const ConfirmDeleteModal = ({ refetch, deleteNote, setDeleteNote }) => {
 
     const queryClient = useQueryClient();
     const { mutate } = useMutation(
-        (id) => fetch(`https://todo-server-ze08.onrender.com/note/${deleteNote._id}`, {
+        (id) => fetch(`http://localhost:5000/note/${deleteNote._id}`, {
             method: 'DELETE'
         }),
         {

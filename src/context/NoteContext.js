@@ -8,14 +8,13 @@ export default NoteContext;
 
 export const NoteProvider = ({ children }) => {
 
-
     const [currentPage, setCurrentPage] = useState(1);
     const [currentPinnedPage, setCurrentPinnedPage] = useState(1);
     const [notesPerPage] = useState(6);
     const [notesPinnedPerPage] = useState(6);
 
     // Get all notes data
-    const { data: notesData, refetch, isLoading } = useQuery('notesData', () => fetch(`https://todo-server-ze08.onrender.com/notes`, {
+    const { data: notesData, refetch, isLoading } = useQuery('notesData', () => fetch(`http://localhost:5000/notes`, {
         method: 'GET',
         headers: {
             'content-type': 'application/json'
@@ -25,7 +24,7 @@ export const NoteProvider = ({ children }) => {
     // Delete all deleted notes
     async function handleEmptyTrash() {
         try {
-            const response = await fetch('https://todo-server-ze08.onrender.com/empty_trash', { method: 'DELETE' });
+            const response = await fetch('http://localhost:5000/empty_trash', { method: 'DELETE' });
             const data = await response.json();
             console.log(data)
             refetch();
@@ -37,7 +36,7 @@ export const NoteProvider = ({ children }) => {
     // Delete all deleted notes
     async function handleDeleteAll() {
         try {
-            const response = await fetch('https://todo-server-ze08.onrender.com/delete_all', { method: 'DELETE' });
+            const response = await fetch('http://localhost:5000/delete_all', { method: 'DELETE' });
             const data = await response.json();
             console.log(data)
             refetch();
@@ -57,7 +56,6 @@ export const NoteProvider = ({ children }) => {
     });
 
 
-
     // Notes Filter
     const notes = sortedNote?.filter((note) => note.isDeleted === false);
     const pinnedNotes = notes?.filter((note) => note.isPinned === true);
@@ -75,7 +73,7 @@ export const NoteProvider = ({ children }) => {
     const activeNotes = unPinnedNotes?.slice(firstNote, lastNote);
     const activePinnedNotes = pinnedNotes?.slice(firstPinnedNote, lastPinnedNote);
 
-
+    // Select page when page count reduce unpinned
     useEffect(() => {
         const notesToShow = Math.ceil(unPinnedNotes?.length / 6);
         console.log('After math.ceil', notesToShow);
@@ -84,16 +82,15 @@ export const NoteProvider = ({ children }) => {
         }
     }, [unPinnedNotes?.length])
 
-
-
     const paginate = (noteNumber) => {
         setCurrentPage(noteNumber)
     };
 
+    // Select page when page count reduce pinned
     useEffect(() => {
         const notesToShow = Math.ceil(pinnedNotes?.length / 6);
         console.log('After math.ceil', notesToShow);
-        if (pinnedNotes?.length) {
+        if (pinnedNotes?.length % 6 === 0) {
             setCurrentPinnedPage(notesToShow)
         }
     }, [pinnedNotes?.length])
