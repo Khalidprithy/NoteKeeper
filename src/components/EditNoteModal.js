@@ -16,7 +16,7 @@ const EditNoteModal = ({ refetch, updateNote, tempUpdateNote, setTempUpdateNote 
     // Edit note function
     const handleEditNote = async () => {
         const { _id, ...updatedNote } = tempUpdateNote;
-        const url = `http://localhost:5000/note/${updateNote._id}`;
+        const url = `https://todo-server-ze08.onrender.com/note/${updateNote._id}`;
         console.log(tempUpdateNote)
         await fetch(url, {
             method: 'PUT',

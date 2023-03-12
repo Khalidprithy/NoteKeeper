@@ -14,7 +14,7 @@ export const NoteProvider = ({ children }) => {
     const [notesPinnedPerPage] = useState(6);
 
     // Get all notes data
-    const { data: notesData, refetch, isLoading } = useQuery('notesData', () => fetch(`http://localhost:5000/notes`, {
+    const { data: notesData, refetch, isLoading } = useQuery('notesData', () => fetch(`https://todo-server-ze08.onrender.com/notes`, {
         method: 'GET',
         headers: {
             'content-type': 'application/json'
@@ -24,7 +24,7 @@ export const NoteProvider = ({ children }) => {
     // Delete all deleted notes
     async function handleEmptyTrash() {
         try {
-            const response = await fetch('http://localhost:5000/empty_trash', { method: 'DELETE' });
+            const response = await fetch('https://todo-server-ze08.onrender.com/empty_trash', { method: 'DELETE' });
             const data = await response.json();
             console.log(data)
             refetch();
@@ -36,7 +36,7 @@ export const NoteProvider = ({ children }) => {
     // Delete all deleted notes
     async function handleDeleteAll() {
         try {
-            const response = await fetch('http://localhost:5000/delete_all', { method: 'DELETE' });
+            const response = await fetch('https://todo-server-ze08.onrender.com/delete_all', { method: 'DELETE' });
             const data = await response.json();
             console.log(data)
             refetch();

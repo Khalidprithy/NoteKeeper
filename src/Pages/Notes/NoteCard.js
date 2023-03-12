@@ -22,7 +22,7 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
 
 
         setLoading(true);
-        const url = `http://localhost:5000/note/${id}`;
+        const url = `https://todo-server-ze08.onrender.com/note/${id}`;
         const noteData = {
             title: note.title,
             noteBody: note.noteBody,
@@ -52,7 +52,7 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
 
 
     const handleDeleteNotes = (id) => {
-        const url = `http://localhost:5000/note/${id}`;
+        const url = `https://todo-server-ze08.onrender.com/note/${id}`;
         const noteData = {
             title: note.title,
             noteBody: note.noteBody,
@@ -80,7 +80,7 @@ const NoteCard = ({ note, refetch, isLoading, updateNote, setUpdateNote, tempUpd
     }
 
     const handleToggleComplete = (id) => {
-        const url = `http://localhost:5000/note/${id}`;
+        const url = `https://todo-server-ze08.onrender.com/note/${id}`;
         const noteData = {
             title: note.title,
             noteBody: note.noteBody,

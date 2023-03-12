@@ -20,7 +20,7 @@ const AddNoteModal = ({ refetch }) => {
     });
 
     const { mutate, isLoading } = useMutation(
-        (noteData) => fetch('http://localhost:5000/notes', {
+        (noteData) => fetch('https://todo-server-ze08.onrender.com/notes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
